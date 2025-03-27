@@ -1,32 +1,31 @@
 import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
-import {StytchB2BProvider} from "@stytch/react/b2b";
-import {StytchB2BUIClient} from "@stytch/vanilla-js/b2b";
+import {StytchUIClient} from '@stytch/vanilla-js';
+import {StytchProvider} from '@stytch/react';
 
-import OKREditor from "./OKREditor.tsx";
-import {Authorize, Login, MemberSettings, Nav, OrgSettings, SSOSettings} from "./Auth.tsx";
+import TodoEditor from "./Todos.tsx";
+import {Authenticate, Authorize, Login, Logout} from "./Auth.tsx";
 
-const stytch = new StytchB2BUIClient(import.meta.env.VITE_STYTCH_PUBLIC_TOKEN);
+const stytch = new StytchUIClient(import.meta.env.VITE_STYTCH_PUBLIC_TOKEN);
 
 function App() {
     return (
-        <StytchB2BProvider stytch={stytch}>
-            <Router>
-                <Nav />
-                <Routes>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/oauth/authorize" element={<Authorize/>}/>
-                    <Route path="/authenticate" element={<Login/>}/>
-
-                    <Route path="/okrs" element={<OKREditor/>}/>
-
-                    <Route path="/settings/sso" element={<SSOSettings/>}/>
-                    <Route path="/settings/organization" element={<OrgSettings/>}/>
-                    <Route path="/settings/members" element={<MemberSettings/>}/>
-
-                    <Route path="*" element={<Navigate to="/okrs"/>}/>
-                </Routes>
-            </Router>
-        </StytchB2BProvider>
+        <StytchProvider stytch={stytch}>
+            <main>
+                <h1>TODO App MCP Demo</h1>
+                    <Router>
+                        <Routes>
+                            <Route path="/oauth/authorize" element={<Authorize/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/authenticate" element={<Authenticate/>}/>
+                            <Route path="/todoapp" element={<TodoEditor/>}/>
+                            <Route path="*" element={<Navigate to="/todoapp"/>}/>
+                        </Routes>
+                    </Router>
+            </main>
+            <footer>
+                <Logout/>
+            </footer>
+        </StytchProvider>
     )
 }
 

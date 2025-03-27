@@ -1,17 +1,17 @@
-import {OKRManagerMCP} from "./OKRManagerMCP.ts";
+import {TodoMCP} from "./TodoMCP.ts";
 import {getStytchOAuthEndpointUrl, stytchBearerTokenAuthMiddleware} from "./lib/auth";
-import {OKRAPI} from "./OKRAPI.ts";
+import {TodoAPI} from "./TodoAPI.ts";
 import {cors} from "hono/cors";
 import {Hono} from "hono";
 
 // Export the TodoMCP class so the Worker runtime can find it
-export {OKRManagerMCP};
+export {TodoMCP};
 
 export default new Hono<{ Bindings: Env }>()
     .use(cors())
 
     // Mount the TODO API underneath us
-    .route('/api', OKRAPI)
+    .route('/api', TodoAPI)
 
     // Serve the OAuth Authorization Server response for Dynamic Client Registration
     .get('/.well-known/oauth-authorization-server', async (c) => {
@@ -33,7 +33,7 @@ export default new Hono<{ Bindings: Env }>()
 
     // Let the MCP Server have a go at handling the request
     .use('/sse/*', stytchBearerTokenAuthMiddleware)
-    .route('/sse', OKRManagerMCP.mount())
+    .route('/sse', TodoMCP.mount())
 
     // Finally - serve static assets from Vite
     .mount('/', (req, env) => env.ASSETS.fetch(req))

@@ -28,7 +28,7 @@ In your terminal clone the project and install dependencies:
 ```bash
 git clone https://github.com/stytchauth/mcp-stytch-consumer-todo-list.git
 cd mcp-stytch-consumer-todo-list
-npm i
+pnpm i
 ```
 
 Next, create an `.env.local` file by running the command below which copies the contents of `.env.template`.
@@ -57,7 +57,7 @@ Open `wranger.jsonc` in the text editor of your choice, and set `vars.STYTCH_PRO
 After completing all the setup steps above the application can be run with the command:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 The application will be available at [`http://localhost:3000`](http://localhost:3000) and the MCP server will be available at `http://localhost:3000/sse`.
@@ -89,7 +89,7 @@ wrangler kv:namespace create TODOS
 3. Deploy the worker
 
 ```
-npm run deploy
+pnpm run deploy
 ```
 
 4. Grant your deployment access to your Stytch project. Assuming your Stytch project was deployed at `https://mcp-stytch-consumer-todo-list.$YOUR_ACCOUNT_NAME.workers.dev`:
