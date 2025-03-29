@@ -33,8 +33,18 @@ export default new Hono<{ Bindings: Env }>()
 
     // Let the MCP Server have a go at handling the request
     .use('/sse/*', stytchBearerTokenAuthMiddleware)
-    .route('/sse', TodoMCP.mount())
+    .mount('/sse', (req, env, ctx) => {
+        const u = new URL(req.url)
+        u.pathname = `/sse/${u.pathname}`
+        u.pathname = u.pathname.replaceAll('//', '/')
+        if (u.pathname.endsWith('/')) {
+            u.pathname = u.pathname.slice(0, u.pathname.length - 1);
+        }
+        Object.defineProperty(req, 'url', {
+            value: u.toString(),
+        })
+        return TodoMCP.mount('/sse').fetch(req, env, ctx)
+    })
 
     // Finally - serve static assets from Vite
     .mount('/', (req, env) => env.ASSETS.fetch(req))
-
