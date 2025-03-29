@@ -17,6 +17,9 @@ importers:
       '@stytch/vanilla-js':
         specifier: ^5.18.6
         version: 5.18.6
+      agents:
+        specifier: ^0.0.46
+        version: 0.0.46(@cloudflare/workers-types@4.20250319.0)
       hono:
         specifier: ^4.7.4
         version: 4.7.4
@@ -1004,6 +1007,9 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  agents@0.0.46:
+    resolution: {integrity: sha512-YC49h/KCP1Og7Pd0XVWD22f5Xg6MevUL0qtIJUjK3xP7Zb2F9lGzGqcvgkRmqalLEwZByZqDknvMb9nuDPnVXg==}
+
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
@@ -1150,6 +1156,10 @@ packages:
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
     engines: {node: '>= 0.10'}
+
+  cron-schedule@5.0.4:
+    resolution: {integrity: sha512-nH0a49E/kSVk6BeFgKZy4uUsy6D2A16p120h5bYD9ILBhQu7o2sJFH+WI4R731TSBQ0dB1Ik7inB/dRAB4C8QQ==}
+    engines: {node: '>=18'}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -1312,6 +1322,10 @@ packages:
   etag@1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+
+  event-target-shim@6.0.2:
+    resolution: {integrity: sha512-8q3LsZjRezbFZ2PN+uP+Q7pnHUMmAOziU2vA2OwoFaKIXxlxl38IylhSSgUorWu/rf4er67w0ikBqjBFk/pomA==}
+    engines: {node: '>=10.13.0'}
 
   eventsource-parser@3.0.0:
     resolution: {integrity: sha512-T1C0XCUimhxVQzW4zFipdx0SficT651NnkR0ZSH3yQwh+mFMdLfgjABVi4YtMTtaL4s168593DaoaRLMqryavA==}
@@ -1726,6 +1740,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.5:
+    resolution: {integrity: sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -1793,6 +1812,14 @@ packages:
   parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
+
+  partyserver@0.0.66:
+    resolution: {integrity: sha512-GyC1uy4dvC4zPkwdzHqCkQ1J1CMiI0swIJQ0qqsJh16WNkEo5QHuU3l3ikLO8t+Yq0cRr0qO8++xbr11h+107w==}
+    peerDependencies:
+      '@cloudflare/workers-types': ^4.20240729.0
+
+  partysocket@1.1.2:
+    resolution: {integrity: sha512-vWyxg0dYJewBsT6BaYkq+DEavYw+N/8J0jUXYSuZRRJdnmMJY+rkCg19t/8c3pTSyg8FjJH8VzIaHBhFMQRDIw==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -2433,8 +2460,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20250317.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20250319.0':
-    optional: true
+  '@cloudflare/workers-types@4.20250319.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -3046,6 +3072,15 @@ snapshots:
 
   acorn@8.14.1: {}
 
+  agents@0.0.46(@cloudflare/workers-types@4.20250319.0):
+    dependencies:
+      cron-schedule: 5.0.4
+      nanoid: 5.1.5
+      partyserver: 0.0.66(@cloudflare/workers-types@4.20250319.0)
+      partysocket: 1.1.2
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+
   ajv@6.12.6:
     dependencies:
       fast-deep-equal: 3.1.3
@@ -3186,6 +3221,8 @@ snapshots:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
+
+  cron-schedule@5.0.4: {}
 
   cross-spawn@7.0.6:
     dependencies:
@@ -3380,6 +3417,8 @@ snapshots:
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
+
+  event-target-shim@6.0.2: {}
 
   eventsource-parser@3.0.0: {}
 
@@ -3800,6 +3839,8 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  nanoid@5.1.5: {}
+
   natural-compare@1.4.0: {}
 
   negotiator@1.0.0: {}
@@ -3858,6 +3899,15 @@ snapshots:
       callsites: 3.1.0
 
   parseurl@1.3.3: {}
+
+  partyserver@0.0.66(@cloudflare/workers-types@4.20250319.0):
+    dependencies:
+      '@cloudflare/workers-types': 4.20250319.0
+      nanoid: 5.1.5
+
+  partysocket@1.1.2:
+    dependencies:
+      event-target-shim: 6.0.2
 
   path-exists@4.0.0: {}
 
