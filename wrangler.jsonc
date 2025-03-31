@@ -6,6 +6,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "mcp-stytch-consumer-todo-list",
 	"main": "api/index.ts",
+	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "2025-03-19",
 	"observability": {
 		"enabled": true
@@ -27,7 +28,7 @@
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_classes": [
+			"new_sqlite_classes": [
 				"TodoMCP"
 			]
 		}
