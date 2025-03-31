@@ -73,7 +73,7 @@ npx @modelcontextprotocol/inspector@latest
 
 ##  Deploy to Cloudflare Workers
 
-Click the button!!!
+Click the button - **you'll need to configure environment variables after the initial deployment**. 
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/stytchauth/mcp-stytch-consumer-todo-list.git)
 
