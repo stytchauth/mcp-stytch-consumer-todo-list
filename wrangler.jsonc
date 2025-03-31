@@ -52,7 +52,7 @@
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
 	"vars": {
-		"STYTCH_PROJECT_ID": "project-test-ecd9dcf7-a952-4eaa-b5f7-380b4da2f019"
+		"STYTCH_PROJECT_ID": "<YOUR_PROJECT_ID_FROM_STYTCH_DASHBOARD>"
 	},
 	/**
 	 * Note: Use secrets to store sensitive data.
