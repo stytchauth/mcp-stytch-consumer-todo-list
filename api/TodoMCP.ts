@@ -1,7 +1,7 @@
 import {McpServer, ResourceTemplate} from '@modelcontextprotocol/sdk/server/mcp.js'
 import {z} from 'zod'
 import {todoService} from "./TodoService.ts";
-import {AuthenticationContext} from "../types";
+import {AuthenticationContext, Todo} from "../types";
 import {McpAgent} from "agents/mcp";
 
 /**
@@ -11,8 +11,20 @@ import {McpAgent} from "agents/mcp";
 export class TodoMCP extends McpAgent<Env, unknown, AuthenticationContext> {
     async init() {
     }
+
     get todoService() {
         return todoService(this.env, this.props.claims.sub)
+    }
+
+    formatResponse = (description: string, newState: Todo[]): {
+        content: Array<{ type: 'text', text: string }>
+    } => {
+        return {
+            content: [{
+                type: "text",
+                text: `Success! ${description}\n\nNew state:\n${JSON.stringify(newState, null, 2)}}`
+            }]
+        };
     }
 
     get server() {
@@ -48,24 +60,18 @@ export class TodoMCP extends McpAgent<Env, unknown, AuthenticationContext> {
         )
 
         server.tool('createTodo', 'Add a new TODO task', {todoText: z.string()}, async ({todoText}) => {
-            await this.todoService.add(todoText)
-            return {
-                content: [{type: "text", text: 'TODO added successfully'}]
-            };
+            const todos = await this.todoService.add(todoText)
+            return this.formatResponse('TODO added successfully', todos)
         })
 
         server.tool('markTodoComplete', 'Mark a TODO as complete', {todoID: z.string()}, async ({todoID}) => {
-            await this.todoService.markCompleted(todoID)
-            return {
-                content: [{type: "text", text: 'TODO completed successfully'}]
-            };
+            const todos = await this.todoService.markCompleted(todoID)
+            return this.formatResponse('TODO completed successfully', todos)
         })
 
         server.tool('deleteTodo', 'Mark a TODO as deleted', {todoID: z.string()}, async ({todoID}) => {
-            await this.todoService.delete(todoID)
-            return {
-                content: [{type: "text", text: 'TODO deleted successfully'}]
-            };
+            const todos = await this.todoService.delete(todoID)
+            return this.formatResponse('TODO deleted successfully', todos)
         })
 
         return server
