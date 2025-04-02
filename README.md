@@ -48,12 +48,17 @@ Open `.env.local` in the text editor of your choice, and set the environment var
 VITE_STYTCH_PUBLIC_TOKEN=public-token-test-abc123-abcde-1234-0987-0000-abcd1234
 ```
 
-Open `wranger.jsonc` in the text editor of your choice, and set `vars.STYTCH_PROJECT_ID` using the `Project ID` found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
+Create a `.dev.vars` file by running the command below which copies the contents of `.dev.vars.template`
+
+```bash
+cp .dev.vars.template .dev.vars
 ```
-// This is what a completed wrangler.jsonc will look like
-"vars": {
-   "STYTCH_PROJECT_ID": "project-test-6c20cd16-73d5-44f7-852c-9a7e7b2ccf62"
-},
+
+Open `.dev.vars` in the text editor of your choice, and set the environment variables using the `Project ID` and `Secret`  found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
+
+```
+// This is what a completed .dev.vars file will look like
+STYTCH_PROJECT_ID=project-test-6c20cd16-73d5-44f7-852c-9a7e7b2ccf62
 ```
 
 ## Running locally
@@ -82,7 +87,7 @@ Or, if you want to follow the steps by hand:
 1. Create a KV namespace for the TODO app to use
 
 ```
-wrangler kv:namespace create TODOS
+wrangler kv namespace create TODOS
 ```
 
 2. Update the KV namespace ID in `wrangler.jsonc` with the ID you received:
@@ -96,13 +101,20 @@ wrangler kv:namespace create TODOS
 ]
 ```
 
-3. Deploy the worker
+
+3. Upload your Stytch Env Vars for use by the worker
+
+```bash
+npx wrangler secret bulk .dev.vars
+```
+
+4. Deploy the worker
 
 ```
 npm run deploy
 ```
 
-4. Grant your deployment access to your Stytch project. Assuming your Stytch project was deployed at `https://mcp-stytch-consumer-todo-list.$YOUR_ACCOUNT_NAME.workers.dev`:
+5. Grant your deployment access to your Stytch project. Assuming your Stytch project was deployed at `https://mcp-stytch-consumer-todo-list.$YOUR_ACCOUNT_NAME.workers.dev`:
    1. Add `https://mcp-stytch-consumer-todo-list.$YOUR_ACCOUNT_NAME.workers.dev/authenticate` as an allowed [Redirect URL](https://stytch.com/dashboard/redirect-urls?env=test)
    2. Add `https://mcp-stytch-consumer-todo-list.$YOUR_ACCOUNT_NAME.workers.dev` as an allowed Authorized Application in the [Frontend SDKs](https://stytch.com/dashboard/sdk-configuration?env=test) configuration
 
