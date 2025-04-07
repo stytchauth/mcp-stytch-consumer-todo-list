@@ -59,6 +59,7 @@ Open `.dev.vars` in the text editor of your choice, and set the environment vari
 ```
 // This is what a completed .dev.vars file will look like
 STYTCH_PROJECT_ID=project-test-6c20cd16-73d5-44f7-852c-9a7e7b2ccf62
+STYTCH_SECRET=your-stytch-secret-key
 ```
 
 ## Running locally
