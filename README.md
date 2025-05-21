@@ -88,7 +88,7 @@ Or, if you want to follow the steps by hand:
 1. Create a KV namespace for the TODO app to use
 
 ```
-wrangler kv namespace create TODOS
+npx wrangler kv namespace create "TODOS"
 ```
 
 2. Update the KV namespace ID in `wrangler.jsonc` with the ID you received:
