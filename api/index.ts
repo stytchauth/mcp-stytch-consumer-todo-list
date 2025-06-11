@@ -1,5 +1,5 @@
 import {TodoMCP} from "./TodoMCP.ts";
-import {getStytchOAuthEndpointUrl, stytchBearerTokenAuthMiddleware} from "./lib/auth";
+import {bindTokenMiddleware, getStytchOAuthEndpointUrl, stytchBearerTokenAuthMiddleware} from "./lib/auth";
 import {TodoAPI} from "./TodoAPI.ts";
 import {cors} from "hono/cors";
 import {Hono} from "hono";
@@ -32,10 +32,10 @@ export default new Hono<{ Bindings: Env }>()
     })
 
     // Let the MCP Server have a go at handling the request
-    .use('/sse/*', stytchBearerTokenAuthMiddleware)
+    .use('/sse/*', stytchBearerTokenAuthMiddleware, bindTokenMiddleware)
     .route('/sse', new Hono().mount('/', TodoMCP.serveSSE('/sse').fetch))
 
-    .use('/mcp', stytchBearerTokenAuthMiddleware)
+    .use('/mcp', stytchBearerTokenAuthMiddleware, bindTokenMiddleware)
     .route('/mcp', new Hono().mount('/', TodoMCP.serve('/mcp').fetch))
 
     // Finally - serve static assets from Vite

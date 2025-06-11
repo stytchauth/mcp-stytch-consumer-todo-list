@@ -10,6 +10,7 @@ class TodoService {
         private env: Env,
         private userID: string,
     ) {
+        console.log('userID', userID);
     }
 
     get = async (): Promise<Todo[]> => {
