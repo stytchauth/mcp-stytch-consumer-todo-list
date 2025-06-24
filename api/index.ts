@@ -13,21 +13,11 @@ export default new Hono<{ Bindings: Env }>()
     // Mount the TODO API underneath us
     .route('/api', TodoAPI)
 
-    // Serve the OAuth Authorization Server response for Dynamic Client Registration
-    .get('/.well-known/oauth-authorization-server', async (c) => {
+    .get('/.well-known/oauth-protected-resource', async (c) => {
         const url = new URL(c.req.url);
         return c.json({
-            issuer: c.env.STYTCH_PROJECT_ID,
-            // Link to the OAuth Authorization screen implemented within the React UI
-            authorization_endpoint: `${url.origin}/oauth/authorize`,
-            token_endpoint: getStytchOAuthEndpointUrl(c.env, 'oauth2/token'),
-            registration_endpoint: getStytchOAuthEndpointUrl(c.env, 'oauth2/register'),
-            scopes_supported: ['openid', 'profile', 'email', 'offline_access'],
-            response_types_supported: ['code'],
-            response_modes_supported: ['query'],
-            grant_types_supported: ['authorization_code', 'refresh_token'],
-            token_endpoint_auth_methods_supported: ['none'],
-            code_challenge_methods_supported: ['S256'],
+            resource: url.origin,
+            authorization_servers: [`https://${c.env.STYTCH_DOMAIN}`],
         })
     })
 
