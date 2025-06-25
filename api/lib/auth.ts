@@ -37,7 +37,7 @@ export const stytchBearerTokenAuthMiddleware = createMiddleware<{
     const url = new URL(c.req.url);
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        const wwwAuthValue = `Bearer error="Unauthorized", error_description="Unauthorized", resource_metadata="https://${url.origin}/.well-known/oauth-protected-resource"`;
+        const wwwAuthValue = `Bearer error="Unauthorized", error_description="Unauthorized", resource_metadata="${url.origin}/.well-known/oauth-protected-resource"`;
         const responseHeaders = new Headers();
         
         responseHeaders.set('WWW-Authenticate', wwwAuthValue);
