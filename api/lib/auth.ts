@@ -68,14 +68,9 @@ async function validateStytchJWT(token: string, env: Env) {
         jwks = createRemoteJWKSet(new URL(getStytchOAuthEndpointUrl(env, '.well-known/jwks.json')))
     }
 
-    let expectedIssuer = `stytch.com/${env.STYTCH_PROJECT_ID}`
-    if (env.STYTCH_DOMAIN) {
-        expectedIssuer = `https://${env.STYTCH_DOMAIN}`
-    }
-
     return await jwtVerify(token, jwks, {
         audience: env.STYTCH_PROJECT_ID,
-        issuer: [expectedIssuer],
+        issuer: [`https://${env.STYTCH_DOMAIN}`],
         typ: "JWT",
         algorithms: ['RS256'],
     })
