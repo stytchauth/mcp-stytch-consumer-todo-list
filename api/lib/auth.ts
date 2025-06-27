@@ -34,9 +34,15 @@ export const stytchBearerTokenAuthMiddleware = createMiddleware<{
     Bindings: Env,
 }>(async (c, next) => {
     const authHeader = c.req.header('Authorization')
+    const url = new URL(c.req.url);
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new HTTPException(401, {message: 'Missing or invalid access token'})
+        const wwwAuthValue = `Bearer error="Unauthorized", error_description="Unauthorized", resource_metadata="${url.origin}/.well-known/oauth-protected-resource"`;
+        const responseHeaders = new Headers();
+        
+        responseHeaders.set('WWW-Authenticate', wwwAuthValue);
+        const res = new Response(null, {status: 401, headers: responseHeaders})
+        throw new HTTPException(401, {message: 'Missing or invalid access token', res: res})
     }
     const accessToken = authHeader.substring(7);
 
@@ -64,7 +70,7 @@ async function validateStytchJWT(token: string, env: Env) {
 
     return await jwtVerify(token, jwks, {
         audience: env.STYTCH_PROJECT_ID,
-        issuer: [`stytch.com/${env.STYTCH_PROJECT_ID}`],
+        issuer: [`https://${env.STYTCH_DOMAIN}`],
         typ: "JWT",
         algorithms: ['RS256'],
     })

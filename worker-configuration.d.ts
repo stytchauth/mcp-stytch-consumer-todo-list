@@ -4,6 +4,7 @@ declare namespace Cloudflare {
 	interface Env {
 		TODOS: KVNamespace;
 		STYTCH_PROJECT_ID: "<YOUR_PROJECT_ID_FROM_STYTCH_DASHBOARD>";
+		STYTCH_DOMAIN: "<YOUR_STYTCH_CNAME_DOMAIN_FROM_STYTCH_DASHBOARD";
 		MCP_OBJECT: DurableObjectNamespace<import("./api/index").TodoMCP>;
 		ASSETS: Fetcher;
 	}
