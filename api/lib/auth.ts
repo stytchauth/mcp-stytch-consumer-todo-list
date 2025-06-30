@@ -65,21 +65,13 @@ let jwks: ReturnType<typeof createRemoteJWKSet> | null = null;
 
 async function validateStytchJWT(token: string, env: Env) {
     if (!jwks) {
-        jwks = createRemoteJWKSet(new URL(getStytchOAuthEndpointUrl(env, '.well-known/jwks.json')))
+        jwks = createRemoteJWKSet(new URL(`${env.STYTCH_DOMAIN}/.well-known/jwks.json`))
     }
 
     return await jwtVerify(token, jwks, {
         audience: env.STYTCH_PROJECT_ID,
-        issuer: [`https://${env.STYTCH_DOMAIN}`],
+        issuer: [env.STYTCH_DOMAIN],
         typ: "JWT",
         algorithms: ['RS256'],
     })
-}
-
-export function getStytchOAuthEndpointUrl(env: Env, endpoint: string): string {
-    const baseURL = env.STYTCH_PROJECT_ID.includes('test') ?
-        'https://test.stytch.com/v1/public' :
-        'https://api.stytch.com/v1/public';
-
-    return `${baseURL}/${env.STYTCH_PROJECT_ID}/${endpoint}`
 }

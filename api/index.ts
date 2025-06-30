@@ -1,5 +1,5 @@
 import {TodoMCP} from "./TodoMCP.ts";
-import {getStytchOAuthEndpointUrl, stytchBearerTokenAuthMiddleware} from "./lib/auth";
+import {stytchBearerTokenAuthMiddleware} from "./lib/auth";
 import {TodoAPI} from "./TodoAPI.ts";
 import {cors} from "hono/cors";
 import {Hono} from "hono";
@@ -17,7 +17,7 @@ export default new Hono<{ Bindings: Env }>()
         const url = new URL(c.req.url);
         return c.json({
             resource: url.origin,
-            authorization_servers: [`https://${c.env.STYTCH_DOMAIN}`],
+            authorization_servers: [c.env.STYTCH_DOMAIN],
         })
     })
 
