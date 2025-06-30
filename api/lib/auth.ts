@@ -34,9 +34,15 @@ export const stytchBearerTokenAuthMiddleware = createMiddleware<{
     Bindings: Env,
 }>(async (c, next) => {
     const authHeader = c.req.header('Authorization')
+    const url = new URL(c.req.url);
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new HTTPException(401, {message: 'Missing or invalid access token'})
+        const wwwAuthValue = `Bearer error="Unauthorized", error_description="Unauthorized", resource_metadata="${url.origin}/.well-known/oauth-protected-resource"`;
+        const responseHeaders = new Headers();
+        
+        responseHeaders.set('WWW-Authenticate', wwwAuthValue);
+        const res = new Response(null, {status: 401, headers: responseHeaders})
+        throw new HTTPException(401, {message: 'Missing or invalid access token', res: res})
     }
     const accessToken = authHeader.substring(7);
 
@@ -59,21 +65,13 @@ let jwks: ReturnType<typeof createRemoteJWKSet> | null = null;
 
 async function validateStytchJWT(token: string, env: Env) {
     if (!jwks) {
-        jwks = createRemoteJWKSet(new URL(getStytchOAuthEndpointUrl(env, '.well-known/jwks.json')))
+        jwks = createRemoteJWKSet(new URL(`${env.STYTCH_DOMAIN}/.well-known/jwks.json`))
     }
 
     return await jwtVerify(token, jwks, {
         audience: env.STYTCH_PROJECT_ID,
-        issuer: [`stytch.com/${env.STYTCH_PROJECT_ID}`],
+        issuer: [env.STYTCH_DOMAIN],
         typ: "JWT",
         algorithms: ['RS256'],
     })
-}
-
-export function getStytchOAuthEndpointUrl(env: Env, endpoint: string): string {
-    const baseURL = env.STYTCH_PROJECT_ID.includes('test') ?
-        'https://test.stytch.com/v1/public' :
-        'https://api.stytch.com/v1/public';
-
-    return `${baseURL}/${env.STYTCH_PROJECT_ID}/${endpoint}`
 }

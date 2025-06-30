@@ -54,12 +54,13 @@ Create a `.dev.vars` file by running the command below which copies the contents
 cp .dev.vars.template .dev.vars
 ```
 
-Open `.dev.vars` in the text editor of your choice, and set the environment variables using the `Project ID` and `Secret`  found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
+Open `.dev.vars` in the text editor of your choice, and set the environment variables using the `Project ID`, `Secret`, and `Project Domain`  found on [Project Settings](https://stytch.com/dashboard/project-settings?env=test).
 
 ```
 // This is what a completed .dev.vars file will look like
 STYTCH_PROJECT_ID=project-test-6c20cd16-73d5-44f7-852c-9a7e7b2ccf62
 STYTCH_SECRET=your-stytch-secret-key
+STYTCH_DOMAIN=https://cname-word-1234.customers.stytch.dev
 ```
 
 ## Running locally
