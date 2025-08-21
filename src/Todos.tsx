@@ -53,7 +53,7 @@ const TodoEditor = withLoginRequired(() => {
         <div className="todoEditor">
             <p>
                 The TODO items shown below can be edited via the UI + REST API, or via the MCP Server.
-                Connect to the MCP Server running at <span><b><code>{window.location.origin}/sse</code></b></span>{' '}
+                Connect to the MCP Server running at <span><b><code>{window.location.origin}/mcp</code></b></span>{' '}
                 with your MCP Client to try it out.
             </p>
             <ul>

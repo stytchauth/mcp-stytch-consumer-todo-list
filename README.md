@@ -71,12 +71,16 @@ After completing all the setup steps above the application can be run with the c
 npm run dev
 ```
 
-The application will be available at [`http://localhost:3000`](http://localhost:3000) and the MCP server will be available at `http://localhost:3000/sse`.
+The application will be available at [`http://localhost:3000`](http://localhost:3000) and the MCP server will be available at `http://localhost:3000/mcp`.
 
 Test your MCP server using the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector)
 ```bash
 npx @modelcontextprotocol/inspector@latest
 ```
+
+Navigate to the URL where the Inspector is running, and input the following values:
+- Transport Type: `Streamable HTTP`
+- URL: `http://localhost:3000/mcp`
 
 ##  Deploy to Cloudflare Workers
 
