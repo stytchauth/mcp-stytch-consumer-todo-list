@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/stytchauth-mcp-stytch-consumer-todo-list-badge.png)](https://mseep.ai/app/stytchauth-mcp-stytch-consumer-todo-list)
+
 # Workers + Stytch TODO App MCP Server
 
 This is a Workers server that composes three functions:
